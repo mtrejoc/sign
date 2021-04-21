@@ -1,0 +1,127 @@
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-info text-white mr-2">
+      <i class="mdi mdi-note-plus"></i>                 
+    </span> Agregar nuevo pendiente
+    </h3>
+</div>
+<div class="col-lg-12 grid-margin stretch-card">
+    <div class="card mat-elevation-z8">
+        <div class="card-body">
+            <form class="pt-3" [formGroup]="form" (ngSubmit)="saveTask()">
+                <div class="row">
+                    <div class="col-sm-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Fecha</mat-label>
+                            <input matInput [matDatepicker]="picker" [formControl]="form.controls['date']">
+                            <mat-datepicker-toggle matSuffix [for]="picker"></mat-datepicker-toggle>
+                            <mat-datepicker #picker></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Nombre del Responsable</mat-label>
+                            <input matInput [formControl]="form.controls['nameresponsible']" readonly>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>WIW</mat-label>
+                            <input matInput [formControl]="form.controls['wiwresponsible']" readonly>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-4">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Fecha compromiso</mat-label>
+                            <input matInput [matDatepicker]="picker2" [formControl]="form.controls['duedate']">
+                            <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                            <mat-datepicker #picker2></mat-datepicker>
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-3">
+
+                        <!-- <mat-label>Reporta a</mat-label>
+
+                            <input matInput [formControl]="form.controls['nameReportTo']" autocomplete="off"> -->
+
+
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Reporta a</mat-label>
+                            <mat-select (selectionChange)="userReportTo($event)">
+                                <mat-option *ngFor="let u of users; let i = index" value="{{u['WIW']}}">{{u['FullName']}}</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+
+
+
+                    </div>
+                    <div class="col-sm-3">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Equipo</mat-label>
+                            <input matInput maxlength="250" [formControl]="form.controls['equipment']" autocomplete="off">
+                        </mat-form-field>
+                    </div>
+                    <div class="col-sm-2">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Prioridad</mat-label>
+                            <mat-select [formControl]="form.controls['priority']">
+                                <mat-option value="A">A</mat-option>
+                                <mat-option value="B">B</mat-option>
+                                <mat-option value="C">C</mat-option>
+                            </mat-select>
+                        </mat-form-field>
+                    </div>
+
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Pendiente</mat-label>
+                            <textarea rows="4" matInput maxlength="500" [formControl]="form.controls['task']" autocomplete="off"></textarea>
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="row">
+                    <div class="col-sm-12">
+                        <mat-form-field class="example-full-width">
+                            <mat-label>Comentarios</mat-label>
+                            <textarea rows="4" matInput maxlength="500" [formControl]="form.controls['comment']" autocomplete="off"></textarea >
+                        </mat-form-field>
+                    </div>
+                </div>
+                <div class="card">
+                    <div class="card-header">
+                        Ayuda Visual
+                    </div>
+                    <div class="card-body">
+                        <div class="row">
+                            <div class="col-md-4">
+                                <mat-form-field>
+                                    <div>
+                                        <mat-toolbar>
+                                            <!-- Display files names -->
+                                            <input matInput readonly value="{{fileAttr}}" />
+
+                                            <!-- Browse Button -->
+                                            <button mat-flat-button color="primary">
+                                      Buscar...
+                                    </button>
+                                        </mat-toolbar>
+                                        <!-- Fetch selected filed on change -->
+                                        <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile" multiple="multiple" accept="image/*" />
+                                    </div>
+                                </mat-form-field>
+                            </div>
+                            <div class="col-md-8">
+                                <div><img src="{{dataimage}}" width="100%"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <button type="submit" mat-raised-button class="btn-gradient-info float-right mt-3"><i class="mdi mdi-content-save"></i> Guardar</button>
+            </form>
+        </div>
+    </div>
+</div>

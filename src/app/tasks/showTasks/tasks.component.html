@@ -1,0 +1,202 @@
+<ng-template #content let-modal>
+    <div class="modal-header">
+        <h2 class="modal-title text-dark">Ayuda Visual</h2>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+        <span aria-hidden="true">&times;</span>
+      </button>
+    </div>
+    <div class="modal-body text-center">
+        <img class="viewImage" src="{{dataimage}}" alt="">
+    </div>
+    <div class="modal-footer text-center">
+        <div class="col-md-4 mx-auto">
+            <mat-form-field>
+                <div>
+                    <mat-toolbar>
+                        <!-- Display files names -->
+                        <input matInput readonly value="{{fileAttr}}" />
+
+                        <!-- Browse Button -->
+                        <button mat-flat-button color="primary">
+                  Buscar...
+                </button>
+                    </mat-toolbar>
+                    <!-- Fetch selected filed on change -->
+                    <input type="file" #fileInput id="uploadFile" (change)="uploadFileEvt($event)" name="uploadFile" multiple="multiple" accept="image/*" />
+                </div>
+            </mat-form-field>
+        </div>
+        <div class="col-md-2 mx-auto">
+
+            <button class="btn btn-gradient-info" (click)="updateImage()">
+                  Guardar
+                </button>
+
+        </div>
+    </div>
+</ng-template>
+
+<div class="page-header">
+    <h3 class="page-title">
+        <span class="page-title-icon bg-gradient-info text-white mr-2">
+      <i class="mdi mdi-clipboard-list-outline"></i>                 
+    </span> Pendientes Semana {{week}}
+    </h3>
+</div>
+
+
+<div class="row">
+    <div class="col-sm-2">
+        <mat-form-field>
+            <mat-label>Semana</mat-label>
+            <mat-select disableRipple (selectionChange)="changeWeek($event.value)">
+                <mat-option *ngFor="let w of weeks; let i = index" value="{{w}}">{{w}}</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+
+    <!-- <div class="col">
+        <mat-form-field>
+            <mat-label>Reporta</mat-label>
+            <mat-select disableRipple>
+                <mat-option value="1">Option 1</mat-option>
+                <mat-option value="2">Option 2</mat-option>
+                <mat-option value="3">Option 3</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col">
+        <mat-form-field>
+            <mat-label>Responsable</mat-label>
+            <mat-select disableRipple>
+                <mat-option value="1">Option 1</mat-option>
+                <mat-option value="2">Option 2</mat-option>
+                <mat-option value="3">Option 3</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    -->
+    <div class="col-sm-2">
+        <mat-form-field>
+            <mat-label>Prioridad</mat-label>
+            <mat-select disableRipple (selectionChange)="changePrority($event.value)">
+                <mat-option value="All">All</mat-option>
+                <mat-option value="A">A</mat-option>
+                <mat-option value="B">B</mat-option>
+                <mat-option value="C">C</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+    <div class="col-sm-2">
+        <mat-form-field>
+            <mat-label>Estatus</mat-label>
+            <mat-select disableRipple (selectionChange)="changeStatus($event.value)">
+                <mat-option value="All">All</mat-option>
+                <mat-option value="Abierto">Abierto</mat-option>
+                <mat-option value="Cerrado">Cerrado</mat-option>
+            </mat-select>
+        </mat-form-field>
+    </div>
+</div>
+
+<div class="row">
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-info card-img-holder text-white">
+            <div class="card-body">
+                <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+                <h4 class="font-weight-normal mb-3">Cargados <i class="mdi mdi-database-check mdi-24px float-right"></i>
+                </h4>
+                <h2 class="mb-5">{{cargados}}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-danger card-img-holder text-white">
+            <div class="card-body">
+                <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+                <h4 class="font-weight-normal mb-3">Abiertos <i class="mdi mdi-calendar-remove mdi-24px float-right"></i>
+                </h4>
+                <h2 class="mb-5">{{abiertos}}</h2>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-4 stretch-card grid-margin">
+        <div class="card bg-gradient-success card-img-holder text-white">
+            <div class="card-body">
+                <img src="assets/images/dashboard/circle.svg" class="card-img-absolute" alt="circle-image">
+                <h4 class="font-weight-normal mb-3">Cerrados <i class="mdi mdi-check-decagram mdi-24px float-right"></i>
+                </h4>
+                <h2 class="mb-5">{{cerrados}}</h2>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<div class="row">
+    <div class="col-lg-12 grid-margin stretch-card">
+        <div class="card mat-elevation-z8">
+            <div class="card-body text-center">
+
+                <table datatable [dtOptions]="dtOptions" [dtTrigger]="dtTrigger" class="table-sm hover table-responsive">
+                    <thead>
+                        <tr>
+                            <!-- <th class="title"> Semana </th> -->
+                            <th class="title"> Responsable </th>
+                            <th class="title"> Pendiente </th>
+                            <th class="title"> Equipo </th>
+                            <th class="title"> Prioridad </th>
+                            <th class="title"> Estatus </th>
+                            <th class="title"> Fecha Compromiso </th>
+                            <th class="title"> Reporta </th>
+                            <th class="title"> Comentarios </th>
+                            <th class="title"> Ayuda Visual </th>
+                            <th class="title"> Eliminar </th>
+
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr *ngFor="let t of tasks; let i = index">
+                            <!-- <td>{{t['Week']}}</td> -->
+                            <td><i class="mdi mdi-account" style="font-size:24px;"></i> {{t['NameResponsible']}}</td>
+                            <td>{{t['TaskDesc']}}</td>
+                            <td>{{t['Equipment']}}</td>
+                            <td>
+                                <button type="button" class="btn {{t['Priority'] == 'A' ? 'btn-outline-danger' : t['Priority'] == 'B' ? 'btn-outline-warning' : 'btn-outline-success'}} btn-rounded btn-icon">
+                                {{t['Priority']}} 
+                              </button>
+                            </td>
+                            <td>
+                                <label class="badge  {{t['Status'] == 'Abierto' ? 'badge-danger' : 'badge-success'}}" (click)="t['WIWResponsible'] == wiw ? updateStatus($event.target, t['IdTask']) : false "> {{t['Status']}} </label>
+                            </td>
+                            <td>
+                                <label style="display: none;">{{t['DueDate'] | date}}</label>
+                                <mat-form-field class="example-full-width">
+                                    <input matInput [matDatepicker]="picker2" (dateChange)="updateDueDate($event.target, t['IdTask'])" [value]="t['DueDate']" [disabled]="t['WIWResponsible'] == wiw ? false : true ">
+                                    <mat-datepicker-toggle matSuffix [for]="picker2"></mat-datepicker-toggle>
+                                    <mat-datepicker #picker2></mat-datepicker>
+                                </mat-form-field>
+                            </td>
+                            <td>{{t['NameReportTo']}}</td>
+                            <td>
+                                <mat-form-field class="example-full-width">
+                                    <textarea matInput maxlength="500" (change)="updateComment($event.target, t['IdTask'])" [disabled]="t['WIWResponsible'] == wiw ? false : true ">  {{t['Comments']}}</textarea>
+                                </mat-form-field>
+                            </td>
+                            <td><button type="button" class="btn btn-gradient-info btn-rounded btn-icon" (click)="viewImage(content, t['Image'], t['IdTask'])" style="display:{{t['Image'] != null ? 'inline': 'none'}} ">
+                                <i class="mdi mdi-image-edit-outline"></i>
+                              </button> </td>
+                            <td>
+                                <button *ngIf="t['WIWResponsible'] == wiw" type="button" class="btn btn-danger btn-rounded btn-icon" (click)="deleteTask(t['IdTask'])">
+                                    <i class="mdi mdi-trash-can-outline"></i>
+                                  </button>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
+        </div>
+    </div>
+</div>

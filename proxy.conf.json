@@ -1,0 +1,18 @@
+{
+    "/API/Users/*": {
+        "target": "https://stnaasalw030.us164.corpintra.net",
+        "secure": false,
+        "changeOrigin": true
+    },
+
+    "/Task/*": {
+        "target": "https://localhost:44338/",
+        "secure": false,
+        "changeOrigin": true
+    },
+    "/User/*": {
+        "target": "https://localhost:44338/",
+        "secure": false,
+        "changeOrigin": true
+    }
+}

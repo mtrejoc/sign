@@ -1,0 +1,31 @@
+<nav class="sidebar sidebar-offcanvas" id="sidebar">
+    <ul class="nav">
+        <li class="nav-item nav-profile">
+            <a href="javascript:;" class="nav-link">
+                <i class="mdi mdi-bookmark-check text-success nav-profile-badge"></i>
+                <div class="nav-profile-text">
+                    <span class="font-weight-bold mb-2">{{ nameUser }}</span>
+                    <span class="text-secondary text-small">{{ wiw }}</span>
+                </div>
+
+            </a>
+        </li>
+        <li class="nav-item" *ngFor="let itemMenu of listMenu" routerLinkActive="active" (click)="getName(itemMenu)" [routerLink]="['/menu/', itemMenu.state]">
+            <a class="nav-link">
+                <span class="menu-title">{{ itemMenu.name }}</span>
+                <i class="mdi mdi-{{itemMenu.icon}} menu-icon"></i>
+            </a>
+        </li>
+        <li class="nav-item ">
+            <div class="border-bottom mb-2">
+                <h6 class="font-weight-normal mb-3"></h6>
+            </div>
+
+            <span (click)="newTask()" class="menu-title mr-2">Nuevo </span>
+            <!-- <button class="btn btn-block btn-lg btn-gradient-info mt-4" (click)="newTask()">+ Nuevo</button> -->
+            <button type="button" (click)="newTask()" class="btn btn-gradient-info btn-rounded btn-icon">
+                    <i class="mdi mdi-plus"></i>
+                  </button>
+        </li>
+    </ul>
+</nav>

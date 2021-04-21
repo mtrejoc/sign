@@ -1,0 +1,41 @@
+.title {
+    font-weight: bold !important;
+}
+
+.md-25 {
+    font-size: 25px;
+    background-color: linear-gradient(to right, #90caf9, #047edf 99%) !important;
+}
+
+.viewImage {
+    width: 60%;
+    height: 25rem;
+}
+
+.badge:hover {
+    cursor: pointer;
+}
+
+.mat-toolbar-single-row {
+    height: auto !important;
+    background: transparent;
+}
+
+.mat-toolbar-single-row button {
+    width: 100px;
+}
+
+.mat-form-field {
+    width: 100%;
+}
+
+#uploadFile {
+    top: 0px;
+    left: 0px;
+    width: 100%;
+    z-index: 9;
+    opacity: 0;
+    height: 100%;
+    cursor: pointer;
+    position: absolute;
+}
